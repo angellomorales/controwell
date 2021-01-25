@@ -236,7 +236,7 @@ public class CtrlEditarProceso implements ActionListener {
 
 	public Object[] contenidoTabla(ArrayList<ArrayList> arrayDatos, int row) {
 		Object[] tabla = new Object[arrayDatos.size()];
-		for (int i = 0; i < arrayDatos.size(); i++) {
+		for (int i = 0; i < arrayDatos.size()-1; i++) {
 			tabla[i] = utilities.evaluarArrayInterno(arrayDatos, i).get(row);
 		}
 		return tabla;
