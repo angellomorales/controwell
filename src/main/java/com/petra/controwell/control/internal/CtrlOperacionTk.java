@@ -154,11 +154,12 @@ public class CtrlOperacionTk implements ActionListener {
 						this.verificacionFecha(fechaActual, fechaAnterior, horaActual, true);
 					} else {
 						if (operacionTk.getTipo().equals("Inicial")) {
-							//se pone por el error cuando usa el gethora del ctrlutilites ya que por alguna razon cambia el valor de la hora de operacionTK
-			                Time autoHora=ctrlUtilities.getHoraActual();
-			                java.util.Date myHora= (java.util.Date) frmOperacionTk.spnHora.getValue();
-			                autoHora.setTime(myHora.getTime());
-			                operacionTk.setHora(autoHora);
+							// se pone por el error cuando usa el gethora del ctrlutilites ya que por alguna
+							// razon cambia el valor de la hora de operacionTK
+							Time autoHora = ctrlUtilities.getHoraActual();
+							java.util.Date myHora = (java.util.Date) frmOperacionTk.spnHora.getValue();
+							autoHora.setTime(myHora.getTime());
+							operacionTk.setHora(autoHora);
 						}
 						if (operacionTkC.agregarDatos(operacionTk)) {
 							JOptionPane.showMessageDialog(null, "Registro inicial almacenado");
@@ -459,7 +460,11 @@ public class CtrlOperacionTk implements ActionListener {
 			break;
 		}
 		if (getEnOperacionNSV() == 0 && getEnOperacionAgua() == 0) {
-			frmOperacionTk.btnGuardar.setEnabled(false);
+			if (operacionTk.getTipo().equals("Inicial")) {
+				frmOperacionTk.btnGuardar.setEnabled(true);
+			} else {
+				frmOperacionTk.btnGuardar.setEnabled(false);
+			}
 		}
 		// asignar fecha y hora de ultimo movimimiento
 		if (frmOperacionTk.rdbtnFechaUltimo.isSelected()) {
@@ -473,13 +478,14 @@ public class CtrlOperacionTk implements ActionListener {
 			}
 		} else {
 			if (operacionTk.getTipo().equals("Inicial")) {
-				Calendar autoFecha = ctrlUtilities.asignacionFechas(frmOperacionTk.dtchFecha.getDate(), (java.util.Date) frmOperacionTk.spnHora.getValue());
-    			java.sql.Date sqlFecha = new java.sql.Date(autoFecha.getTime().getTime());
-                operacionTk.setFecha(sqlFecha);
-                Time autoHora=ctrlUtilities.getHoraActual();
-                java.util.Date myHora= (java.util.Date) frmOperacionTk.spnHora.getValue();
-                autoHora.setTime(myHora.getTime());
-                operacionTk.setHora(autoHora);
+				Calendar autoFecha = ctrlUtilities.asignacionFechas(frmOperacionTk.dtchFecha.getDate(),
+						(java.util.Date) frmOperacionTk.spnHora.getValue());
+				java.sql.Date sqlFecha = new java.sql.Date(autoFecha.getTime().getTime());
+				operacionTk.setFecha(sqlFecha);
+				Time autoHora = ctrlUtilities.getHoraActual();
+				java.util.Date myHora = (java.util.Date) frmOperacionTk.spnHora.getValue();
+				autoHora.setTime(myHora.getTime());
+				operacionTk.setHora(autoHora);
 			} else {
 				operacionTk.setFecha(ctrlUtilities.getFechaActual());
 				operacionTk.setHora(ctrlUtilities.getHoraActual());
