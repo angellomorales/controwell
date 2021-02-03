@@ -1,11 +1,15 @@
 package com.petra.controwell.main;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
+
 import com.petra.controwell.control.CtrlPrincipal;
 import com.petra.controwell.control.CtrlPrincipalTanques;
 import com.petra.controwell.control.internal.CtrlAforoTk;
 import com.petra.controwell.control.internal.CtrlBalance;
 import com.petra.controwell.control.internal.CtrlEditarProceso;
 import com.petra.controwell.control.internal.CtrlGraficas;
+import com.petra.controwell.control.internal.CtrlPermisos;
 import com.petra.controwell.control.internal.CtrlPozos;
 import com.petra.controwell.control.internal.CtrlProceso;
 import com.petra.controwell.control.internal.CtrlProcesoAlarmas;
@@ -18,6 +22,7 @@ import com.petra.controwell.model.Calculos;
 import com.petra.controwell.model.data.AforoTk;
 import com.petra.controwell.model.data.Balance;
 import com.petra.controwell.model.data.OperacionTk;
+import com.petra.controwell.model.data.Permisos;
 import com.petra.controwell.model.data.Proceso;
 import com.petra.controwell.model.data.ProcesoAlarmas;
 import com.petra.controwell.model.data.Tanques;
@@ -27,6 +32,7 @@ import com.petra.controwell.model.data.querys.ConsultasAforoTk;
 import com.petra.controwell.model.data.querys.ConsultasBalance;
 import com.petra.controwell.model.data.querys.ConsultasProcesoProduccionArray;
 import com.petra.controwell.model.data.querys.ConsultasOperacionTk;
+import com.petra.controwell.model.data.querys.ConsultasPermisos;
 import com.petra.controwell.model.data.querys.ConsultasProceso;
 import com.petra.controwell.model.data.querys.ConsultasProcesoAlarmas;
 import com.petra.controwell.model.data.querys.ConsultasTanques;
@@ -86,6 +92,7 @@ public class ControWell {
         OperacionTk operacionTk = new OperacionTk();
         Balance balance = new Balance();
         Variador variador= new Variador();
+        Permisos permisos = new Permisos();
 
         //modelo Consultas
         ConsultasProceso procesoC = new ConsultasProceso();
@@ -97,6 +104,7 @@ public class ControWell {
         ConsultasBalance balanceC = new ConsultasBalance();
         ConsultasProcesoProduccionArray graficaC = new ConsultasProcesoProduccionArray();
         ConsultasVariador variadorC= new ConsultasVariador();
+        ConsultasPermisos permisosC = new ConsultasPermisos();
 
         //modelo
         Calculos calculos = new Calculos();
@@ -121,6 +129,7 @@ public class ControWell {
 
         //controlador
         Utilities utilities = new Utilities();
+        CtrlPermisos ctrlPermisos = new CtrlPermisos(permisos,permisosC,utilities);
 
         CtrlPozos ctrlPozos = new CtrlPozos(frmPozos, frmProceso, frmProcesoAlarmas, frmOperacionTk, frmBalance, frmGraficas,frmEditarProceso, wellinfo, wellinfoC, utilities);
         CtrlTanques ctrlTanques = new CtrlTanques(frmTanques, frmAforoTk, frmOperacionTk, tanques, tanquesC, utilities);
@@ -136,10 +145,14 @@ public class ControWell {
         CtrlEditarProceso ctrlEditarProceso= new CtrlEditarProceso(frmEditarProceso,ctrlGraficas,utilities,variadorC,procesoC,frmCargando);
         CtrlReporte ctrlReporte = new CtrlReporte(frmReporte,utilities,ctrlBalance,ctrlTanques,ctrlPozos,ctrlProceso,ctrlVariador);
         CtrlActualizar ctrlActualizar = new CtrlActualizar(ctrlProceso, ctrlProcesoAlarmas);
-        CtrlPrincipal ctrlPrincipal = new CtrlPrincipal(frmPrincipal, frmProceso, frmProcesoAlarmas, frmPozos, frmAforoTk, frmTanques, frmGraficas, frmReporte, frmSeries,frmEditarProceso, ctrlPozos, ctrlProceso, ctrlProcesoAlarmas, ctrlActualizar, ctrlAforoTk, ctrlTanques, ctrlGraficas, ctrlReporte, ctrlEditarProceso);
+        CtrlPrincipal ctrlPrincipal = new CtrlPrincipal(frmPrincipal, frmProceso, frmProcesoAlarmas, frmPozos, frmAforoTk, frmTanques, frmGraficas, frmReporte, frmSeries,frmEditarProceso, ctrlPozos, ctrlProceso, ctrlProcesoAlarmas, ctrlActualizar, ctrlAforoTk, ctrlTanques, ctrlGraficas, ctrlReporte, ctrlEditarProceso,ctrlPermisos);
 
         //ejecucion
-        ctrlPrincipal.iniciar();
+        try {
+			ctrlPrincipal.iniciar();
+		} catch (HeadlessException | SQLException e) {
+			System.err.println("ERROR " + e);
+		}
 
     }
 

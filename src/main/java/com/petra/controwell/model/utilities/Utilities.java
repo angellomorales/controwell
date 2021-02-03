@@ -5,6 +5,7 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -184,7 +185,7 @@ public class Utilities {
 		}
 		return ruta;
 	}
-	
+
 	public File seleccionarArchivoEntrada(JFileChooser fileChooser, FileNameExtensionFilter filtro) {
 		String ruta = null;
 		File archivo = null;
@@ -221,6 +222,14 @@ public class Utilities {
 		String res = ar.get(pos).toString();
 		return res;
 
+	}
+
+	public long contarDias(Date fechaInicial, Date fechaFinal) {
+
+		LocalDate myDate = fechaInicial.toLocalDate();
+		LocalDate currentDate = fechaFinal.toLocalDate();
+		long numberOFDays = java.time.temporal.ChronoUnit.DAYS.between(myDate, currentDate);
+		return numberOFDays;
 	}
 
 }
