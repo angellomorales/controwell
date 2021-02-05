@@ -374,7 +374,6 @@ public class CtrlSeries implements ActionListener {
                         this.frmSeries.chkDiluyenteInyectado.setEnabled((false ^ deshabilitar));
                         this.frmSeries.chkNSVconDiluyente.setEnabled((false ^ deshabilitar));
                         this.frmSeries.chkHoras.setEnabled((false ^ deshabilitar));
-                        this.setTituloEjePrincipal("CAUDAL (BPD)");
                         if (this.isEjePrincipal()) {
                             this.setTituloEjePrincipal("CAUDAL (BPD)");
                         } else {
