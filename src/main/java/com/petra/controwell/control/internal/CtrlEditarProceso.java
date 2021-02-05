@@ -236,7 +236,7 @@ public class CtrlEditarProceso implements ActionListener {
 
 	public Object[] contenidoTabla(ArrayList<ArrayList> arrayDatos, int row) {
 		Object[] tabla = new Object[arrayDatos.size()];
-		for (int i = 0; i < arrayDatos.size()-1; i++) {
+		for (int i = 0; i < arrayDatos.size() - 1; i++) {
 			tabla[i] = utilities.evaluarArrayInterno(arrayDatos, i).get(row);
 		}
 		return tabla;
@@ -271,23 +271,26 @@ public class CtrlEditarProceso implements ActionListener {
 					} else {
 						switch (contadorCeldas) {
 						case 0: {
-							arrayFila.add(celda.getDateCellValue());
+							if (celda.getDateCellValue() != null)
+								arrayFila.add(celda.getDateCellValue());
 							contadorCeldas++;
 							break;
 						}
 						case 1: {
-							arrayFila.add(celda.getDateCellValue());
+							if (celda.getDateCellValue() != null)
+								arrayFila.add(celda.getDateCellValue());
 							contadorCeldas++;
 							break;
 						}
 						case 2: {
-							arrayFila.add(celda.getStringCellValue());
+							if (!celda.getStringCellValue().isEmpty())
+								arrayFila.add(celda.getStringCellValue());
 							contadorCeldas++;
 							break;
 						}
 						case 3: {
-							if (celda.getCellType() == CellType.NUMERIC) {
-								arrayFila.add(celda.getNumericCellValue());
+								if (celda.getCellType() == CellType.NUMERIC) {
+									arrayFila.add(celda.getNumericCellValue());
 							}
 							break;
 						}
@@ -318,13 +321,13 @@ public class CtrlEditarProceso implements ActionListener {
 			arrayTitulos = utilities.evaluarArrayInterno(arrayDatos, arrayDatos.size() - 1);
 			for (int i = 0; i < arrayDatos.size() - 1; i++) {
 				arrayInterno = utilities.evaluarArrayInterno(arrayDatos, i);
-				if (arrayTitulos.size()==17) {
+				if (arrayTitulos.size() == 17) {
 					if (this.procesoC.modificarXArray(arrayInterno, arrayTitulos)) {
 
 					} else {
 						JOptionPane.showMessageDialog(null, "error al cargar los registros");
 					}
-				}else {
+				} else {
 					if (this.variadorC.modificarXArray(arrayInterno, arrayTitulos)) {
 
 					} else {
